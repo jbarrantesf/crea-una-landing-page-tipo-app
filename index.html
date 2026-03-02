@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORBIT - Tu Visión, Nuestra Aplicación</title>
+    <meta name="description" content="ORBIT: Equipo de agentes especializados listos para crear cualquier aplicación por ti de manera autónoma. Diseño limpio, elegante y profesional.">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50%25' y='50%25' font-size='90' text-anchor='middle' dominant-baseline='central'%3E🚀%3C/text%3E%3C/svg%3E">
+
+    <style>
+        :root {
+            --primary-color: #007AFF; /* Apple Blue */
+            --secondary-color: #33C759; /* Apple Green */
+            --background-light: #F5F5F7; /* Apple Light Gray */
+            --text-light: #1D1D1F; /* Apple Dark Gray */
+            --header-bg-light: #FFFFFF;
+            --card-bg-light: #FFFFFF;
+            --border-light: #E8E8ED;
+
+            --background-dark: #1C1C1E; /* Dark Mode Background */
+            --text-dark: #F5F5F7; /* Dark Mode Text */
+            --header-bg-dark: #2C2C2E;
+            --card-bg-dark: #2C2C2E;
+            --border-dark: #444446;
+
+            --font-family-sans: "SF Pro Display", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+            --border-radius-lg: 12px;
+            --border-radius-md: 8px;
+            --spacing-lg: 48px;
+            --spacing-md: 24px;
+            --spacing-sm: 16px;
+            --spacing-xs: 8px;
+            --max-width: 1200px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --background-light: var(--background-dark);
+                --text-light: var(--text-dark);
+                --header-bg-light: var(--header-bg-dark);
+                --card-bg-light: var(--card-bg-dark);
+                --border-light: var(--border-dark);
+            }
+        }
+
+        /* Base styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family-sans);
+            color: var(--text-light);
+            background-color: var(--background-light);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Utilities */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        /* Header */
+        .site-header {
+            background-color: var(--header-bg-light);
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: var(--spacing-sm) 0;
+        }
+
+        .site-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .site-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        .site-logo svg {
+            width: 28px;
+            height: 28px;
+            fill: var(--primary-color);
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+            gap: var(--spacing-md);
+        }
+
+        .nav-link {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--text-light);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--border-radius-md);
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .main-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-xs) var(--spacing-md);
+            background-color: var(--primary-color);
+            color: #FFFFFF;
+            border-radius: 9999px; /* Pill shape */
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .main-button:hover {
+            background-color: #0056b3; /* Darker blue */
+            transform: translateY(-2px);
+            text-decoration: none;
+        }
+
+        .main-button:active {
+            transform: translateY(0);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(180deg, #FFFFFF 0%, var(--background-light) 100%);
+            padding: var(--spacing-lg) 0;
+            min-height: calc(100vh - 80px); /* Adjust based on header height */
+            display: flex;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            color: var(--text-light);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .hero-section {
+                background: linear-gradient(180deg, var(--background-dark) 0%, #171719 100%);
+            }
+        }
+
+        .hero-content {
+            z-index: 1;
+            position: relative;
+        }
+
+        .headline {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: var(--spacing-md);
+            letter-spacing: -0.02em;
+        }
+
+        .sub-headline {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 400;
+            color: rgba(var(--text-light-rgb), 0.7);
+            margin-bottom: var(--spacing-lg);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .sub-headline {
+                color: rgba(245, 245, 247, 0.7); /* Specific for dark mode sub-headline */
+            }
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+        }
+
+        .cta-buttons .main-button {
+            min-width: 180px;
+            padding: var(--spacing-sm) var(--spacing-md);
+            font-size: 1.1rem;
+        }
+        .cta-buttons .main-button.secondary {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+        .cta-buttons .main-button.secondary:hover {
+            background-color: var(--primary-color);
+            color: #FFFFFF;
+            transform: translateY(-2px);
+        }
+
+        .hero-image-mockup {
+            width: 80%;
+            max-width: 900px;
+            margin: var(--spacing-lg) auto 0;
+            border-radius: var(--border-radius-lg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 0 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            background-color: #000; /* Placeholder for image outside media query */
+        }
+        .hero-image-mockup img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: var(--spacing-lg) 0;
+            background-color: var(--background-light);
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+            letter-spacing: -0.01em;
+            color: var(--text-light);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .feature-card {
+            background-color: var(--card-bg-light);
+            border: 1px solid var(--border-light);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-md);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .feature-icon {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: var(--spacing-sm);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            color: var(--text-light);
+        }
+
+        .feature-description {
+            font-size: 1rem;
+            color: rgba(var(--text-light-rgb), 0.8);
+        }
+
+        /* Why ORBIT Section */
+        .why-orbit-section {
+            padding: var(--spacing-lg) 0;
+            background-color: var(--background-light);
+        }
+        .why-orbit-content {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+            align-items: center;
+        }
+        .why-orbit-item {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: var(--spacing-md);
+            justify-content: center;
+            max-width: 900px;
+        }
+        .why-orbit-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .why-orbit-text {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+        }
+        .why-orbit-text h3 {
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-light);
+        }
+        .why-orbit-text p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: rgba(var(--text-light-rgb), 0.85);
+        }
+        .why-orbit-image {
+            flex: 1;
+            min-width: 280px;
+            max-width: 450px;
+            border-radius: var(--border-radius-lg);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .why-orbit-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .why-orbit-image img:hover {
+            transform: scale(1.03);
+        }
+
+        /* Call to Action Section */
+        .cta-section {
+            background-color: var(--primary-color);
+            color: #FFFFFF;
+            padding: var(--spacing-lg) 0;
+            text-align: center;
+        }
+
+        .cta-section .section-title {
+            color: #FFFFFF;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .cta-section .sub-headline {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .cta-section .main-button {
+            background-color: #FFFFFF;
+            color: var(--primary-color);
+            min-width: 220px;
+            font-size: 1.2rem;
+            padding: var(--spacing-sm) var(--spacing-md);
+        }
+        .cta-section .main-button:hover {
+            background-color: #F0F0F0;
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        .site-footer {
+            background-color: var(--header-bg-light);
+            padding: var(--spacing-lg) 0;
+            border-top: 1px solid var(--border-light);
+            font-size: 0.9rem;
+            color: rgba(var(--text-light-rgb), 0.7);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+        }
+
+        .footer-brand, .footer-links, .footer-contact {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .footer-brand .site-logo {
+            font-size: 1.3rem;
+            margin-bottom: var(--spacing-xs);
+            color: var(--text-light);
+        }
+        .footer-brand .site-logo svg {
+            fill: var(--text-light);
+        }
+
+        .footer-brand p {
+            line-height: 1.8;
+            color: rgba(var(--text-light-rgb), 0.7);
+        }
+
+        .footer-links h4, .footer-contact h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-light);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .footer-links a, .footer-contact a {
+            color: rgba(var(--text-light-rgb), 0.7);
+            transition: color 0.2s ease;
+        }
+        .footer-links a:hover, .footer-contact a:hover {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: var(--spacing-lg);
+            padding-top: var(--spacing-md);
+            border-top: 1px solid var(--border-light);
+            color: rgba(var(--text-light-rgb), 0.6);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .site-header .container {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+            }
+            .nav-list {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: var(--spacing-sm);
+            }
+            .headline {
+                font-size: 2.5rem;
+            }
+            .sub-headline {
+                font-size: 1.1rem;
+            }
+            .hero-image-mockup {
+                width: 95%;
+            }
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .footer-brand, .footer-links, .footer-contact {
+                max-width: 400px; /* Constrain width for better reading on small screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-list {
+                display: none; /* Hide nav links on very small screens, could add a hamburger menu */
+            }
+            .site-logo {
+                width: 100%;
+                justify-content: center;
+            }
+            .site-header {
+                padding: var(--spacing-sm) var(--spacing-xs);
+            }
+            .hero-section {
+                padding-top: var(--spacing-md);
+                padding-bottom: var(--spacing-md);
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .feature-card {
+                padding: var(--spacing-sm);
+            }
+            .footer-brand .site-logo {
+                justify-content: center;
+            }
+        }
+
+        /* Custom properties for RGB fallbacks for transparency */
+        :root {
+             /* Hex to RGB conversion for dynamic opacity */
+            --text-light-rgb: 29, 29, 31; /* #1D1D1F */
+            --text-dark-rgb: 245, 245, 247; /* #F5F5F7 */
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-light-rgb: var(--text-dark-rgb);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="#" class="site-logo" aria-label="ORBIT Inicio">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.477 2 2 6.477 2 12C2 17.523 6.477 22 12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2ZM12 4C16.418 4 20 7.582 20 12C20 16.418 16.418 20 12 20C7.582 20 4 16.418 4 12C4 7.582 7.582 4 12 4ZM12 6C9.79086 6 8 7.79086 8 10C8 12.2091 9.79086 14 12 14C14.2091 14 16 12.2091 16 10C16 7.79086 14.2091 6 12 6ZM12 8C13.1046 8 14 8.89543 14 10C14 11.1046 13.1046 12 12 12C10.8954 12 10 11.1046 10 10C10 8.89543 10.8954 8 12 8Z" />
+                </svg>
+                ORBIT
+            </a>
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li><a href="#soluciones" class="nav-link">Soluciones</a></li>
+                    <li><a href="#porque-orbit" class="nav-link">¿Por qué ORBIT?</a></li>
+                    <li><a href="#contacto" class="nav-link">Contacto</a></li>
+                </ul>
+            </nav>
+            <a href="#contacto" class="main-button">Comienza ahora</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <div class="container hero-content">
+                <h1 class="headline">
+                    ORBIT: Tu Visión, Nuestra Aplicación.
+                </h1>
+                <p class="sub-headline">
+                    Un equipo de agentes especializados, listos para crear cualquier aplicación por ti de manera autónoma, con un diseño impecable y funcionalidad avanzada.
+                </p>
+                <div class="cta-buttons">
+                    <a href="#contacto" class="main-button">Explora nuestras soluciones</a>
+                    <a href="#porque-orbit" class="main-button secondary">Conoce al equipo</a>
+                </div>
+                <div class="hero-image-mockup">
+                    <!-- Imagen de un mockup de aplicación limpia y vibrante con un diseño moderno tipo Apple -->
+                    <img src="https://images.unsplash.com/photo-1542831371-d352b663b655?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8MHx8fHw%3D" alt="Mockup de una aplicación moderna y limpia con interfaz de usuario tipo Apple" loading="eager">
+                </div>
+            </div>
+        </section>
+
+        <section id="soluciones" class="features-section">
+            <div class="container">
+                <h2 class="section-title">Soluciones que Impulsan tu Negocio</h2>
+                <div class="feature-grid">
+                    <article class="feature-card">
+                        <span class="feature-icon" aria-hidden="true">💡</span>
+                        <h3 class="feature-title">Innovación a Medida</h3>
+                        <p class="feature-description">Transformamos tus ideas en aplicaciones funcionales y estéticamente atractivas, adaptándonos a tus necesidades específicas.</p>
+                    </article>
+                    <article class="feature-card">
+                        <span class="feature-icon" aria-hidden="true">🤖</span>
+                        <h3 class="feature-title">Agentes Autónomos</h3>
+                        <p class="feature-description">Nuestro equipo de IA trabaja de forma independiente para diseñar, desarrollar y desplegar tu aplicación en tiempo récord.</p>
+                    </article>
+                    <article class="feature-card">
+                        <span class="feature-icon" aria-hidden="true">✨</span>
+                        <h3 class="feature-title">Diseño Elegante</h3>
+                        <p class="feature-description">Creamos interfaces intuitivas y limpias, siguiendo los estándares de experiencia de usuario más refinados como los de Apple.</p>
+                    </article>
+                    <article class="feature-card">
+                        <span class="feature-icon" aria-hidden="true">🚀</span>
+                        <h3 class="feature-title">Lanzamiento Rápido</h3>
+                        <p class="feature-description">Desde la concepción hasta el lanzamiento, optimizamos cada etapa para que tu aplicación llegue al mercado velozmente.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="porque-orbit" class="why-orbit-section">
+            <div class="container">
+                <h2 class="section-title">¿Por qué elegir ORBIT?</h2>
+                <div class="why-orbit-content">
+                    <div class="why-orbit-item">
+                        <div class="why-orbit-text">
+                            <h3>Experiencia sin Precedentes</h3>
+                            <p>ORBIT combina la agilidad de la inteligencia artificial con la dirección creativa de expertos en diseño y desarrollo. Esto nos permite ofrecer soluciones con una calidad excepcional y una velocidad inigualable.</p>
+                        </div>
+                        <div class="why-orbit-image">
+                            <!-- Imagen de un equipo de trabajo innovador, brainstorming, o elementos abstractos de IA -->
+                            <img src="https://images.unsplash.com/photo-1556740714-a8360d8a546d?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8MHx8fHw%3D" alt="Personas trabajando en equipo con pantallas y gráficos de datos, simbolizando innovación y IA">
+                        </div>
+                    </div>
+                    <div class="why-orbit-item">
+                        <div class="why-orbit-text">
+                            <h3>Diseño que Atrapa Miradas</h3>
+                            <p>Nos especializamos en crear aplicaciones con una estética limpia, minimalista y profesional, inspirada en las marcas líderes. Tu aplicación no solo funcionará perfectamente, sino que también cautivará a tus usuarios desde el primer instante.</p>
+                        </div>
+                        <div class="why-orbit-image">
+                            <!-- Imagen de un diseño de UX/UI clean, o mockups de dispositivos Apple con apps hermosas -->
+                            <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8MHx8fHw%3D" alt="Diseño de interfaz de usuario en un monitor mostrando una aplicación elegante y bien diseñada">
+                        </div>
+                    </div>
+                    <div class="why-orbit-item">
+                        <div class="why-orbit-text">
+                            <h3>Confianza y Transparencia</h3>
+                            <p>En ORBIT, la comunicación es clave. Te mantendremos informado en cada fase del desarrollo, asegurando que el producto final exceda tus expectativas y se alinee perfectamente con tu visión.</p>
+                        </div>
+                        <div class="why-orbit-image">
+                            <!-- Imagen de una persona interactuando con un iPad/tablet, o de comunicación y colaboración tecnológica -->
+                            <img src="https://images.unsplash.com/photo-1549688435-021966a3d132?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8MHx8fHw%3D" alt="Mano tocando una pantalla de tablet con gráficos de negocios, simbolizando interacción y transparencia">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contacto" class="cta-section">
+            <div class="container">
+                <h2 class="section-title">Prepárate para Orbita tu Próxima Gran Idea.</h2>
+                <p class="sub-headline">
+                    Cuéntanos sobre tu proyecto y deja que nuestros agentes inteligentes lo hagan realidad.
+                </p>
+                <a href="mailto:info@orbit.com?subject=Consulta%20sobre%20Desarrollo%20de%20App" class="main-button">Contacta a ORBIT</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <a href="#" class="site-logo" aria-label="ORBIT Inicio">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.477 2 2 6.477 2 12C2 17.523 6.477 22 12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2ZM12 4C16.418 4 20 7.582 20 12C20 16.418 16.418 20 12 20C7.582 20 4 16.418 4 12C4 7.582 7.582 4 12 4ZM12 6C9.79086 6 8 7.79086 8 10C8 12.2091 9.79086 14 12 14C14.2091 14 16 12.2091 16 10C16 7.79086 14.2091 6 12 6ZM12 8C13.1046 8 14 8.89543 14 10C14 11.1046 13.1046 12 12 12C10.8954 12 10 11.1046 10 10C10 8.89543 10.8954 8 12 8Z" />
+                    </svg>
+                    ORBIT
+                </a>
+                <p>Agentes especializados listos para crear cualquier app por ti de manera autónoma.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Enlaces Rápidos</h4>
+                <ul>
+                    <li><a href="#soluciones">Nuestras Soluciones</a></li>
+                    <li><a href="#porque-orbit">¿Por qué ORBIT?</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                    <li><a href="#">Política de Privacidad</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Contáctanos</h4>
+                <p>Email: <a href="mailto:info@orbit.com">info@orbit.com</a></p>
+                <p>Teléfono: <a href="tel:+1234567890">+1 (234) 567-890</a></p>
+                <p>Dirección: Calle Ficticia 123, Ciudad Futura</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 ORBIT. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>
