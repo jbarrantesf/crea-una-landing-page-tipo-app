@@ -1,26 +1,26 @@
 {
   "rewrites": [
     {
-      "source": "/api/:path*",
-      "destination": "/api/index.js"
-    },
-    {
-      "source": "/_next/static/:path*",
-      "destination": "/_next/static/:path*"
-    },
-    {
-      "source": "/static/:path*",
-      "destination": "/static/:path*"
-    },
-    {
-      "source": "/:path*",
+      "source": "/(.*)",
       "destination": "/index.html"
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": "https://your-backend-api.com/api/$1"
     }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
         {
           "key": "X-Frame-Options",
           "value": "DENY"
@@ -30,24 +30,12 @@
           "value": "1; mode=block"
         },
         {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "Strict-Transport-Security",
-          "value": "max-age=63072000; includeSubDomains; preload"
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://your-backend-api.com; object-src 'none'; media-src 'none'; frame-ancestors 'none';"
         },
         {
           "key": "Referrer-Policy",
-          "value": "strict-origin-when-cross-origin"
-        },
-        {
-          "key": "Feature-Policy",
-          "value": "geolocation 'none'; midi 'none'; notifications 'none'; push 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; speaker 'self'; vibrate 'none'; fullscreen 'self'; payment 'none';"
-        },
-        {
-          "key": "Content-Security-Policy",
-          "value": "default-src 'self' vercel.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' vercel.com; style-src 'self' 'unsafe-inline' vercel.com; img-src 'self' data: vercel.com; font-src 'self' data:; connect-src 'self' vercel.com;"
+          "value": "no-referrer-when-downgrade"
         }
       ]
     },
@@ -68,71 +56,11 @@
           "value": "public, max-age=31536000, immutable"
         }
       ]
-    },
-    {
-      "source": "/index.html",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-store, no-cache, must-revalidate, proxy-revalidate"
-        },
-        {
-          "key": "Pragma",
-          "value": "no-cache"
-        },
-        {
-          "key": "Expires",
-          "value": "0"
-        }
-      ]
     }
   ],
   "cleanUrls": true,
-  "trailingSlash": false,
-  "regions": [
-    "iad1",
-    "sfo1"
-  ],
-  "build": {
-    "env": {
-      "NODE_ENV": "production",
-      "API_BASE_URL": "@api_base_url"
-    }
-  },
-  "functions": {
-    "api/index.js": {
-      "memory": 1024,
-      "maxDuration": 10
-    }
-  },
-  "redirects": [
-    {
-      "source": "https://www.orbit.com/:path*",
-      "destination": "https://orbit.com/:path*",
-      "permanent": true
-    },
-    {
-      "source": "http://orbit.com/:path*",
-      "destination": "https://orbit.com/:path*",
-      "permanent": true
-    },
-    {
-      "source": "http://www.orbit.com/:path*",
-      "destination": "https://orbit.com/:path*",
-      "permanent": true
-    }
-  ],
+  "public": true,
   "env": {
-    "DATABASE_URL": "@database_url",
-    "API_SECRET_KEY": "@api_secret_key"
+    "NODE_ENV": "production"
   }
 }
