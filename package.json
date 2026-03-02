@@ -1,0 +1,11 @@
+{
+  "name": "crea-una-landing-page-tipo-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "dependencies": {
+    "serve": "^14.0.0"
+  }
+}
